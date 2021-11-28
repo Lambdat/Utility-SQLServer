@@ -18,61 +18,19 @@ namespace Utility_SQLServer
         
 
         // All'inizializzazione dell'oggetto di tipo Database va passato al metodo costruttore la connection string
-        // presa dal file di configurazione del progetto (es. da ASP.NET 6 in Program.cs)
+        // presa dal file di configurazione del progetto (es. da ASP.NET 6 in Program.cs) oppure inserita manualmente
 
-        // il parametro string name è opzionale, può essere cambiato a seconda delle connection strings presenti nel
-        // file appsettings.json sempre di configurazione
-
-        public Database(string connectionStringInCode, IConfiguration config, string connectionStringNameInConfigFile = "Default")
+        public Database(string connectionString)
         {
 
-
-            string parametriEsternalizzati = config.GetConnectionString(connectionStringNameInConfigFile);
-
-
-
-            if (!string.IsNullOrWhiteSpace(parametriEsternalizzati))
+            if (!string.IsNullOrWhiteSpace(connectionString))
             {
-
-                try
-                {
-                    _con = new SqlConnection(parametriEsternalizzati);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(
-                                          "Errore nella ConnectionString presente nel file di configurazione,\n" +
-                                                $"ECCEZIONE: {ex.Message} \n" +
-                                          "Tentativo con la ConnectionString interna al codice (inserita in fase di inizializzazione al metodo costruttore) ... \n"
-                                      );
-                    try
-                    {
-                        _con = new SqlConnection(connectionStringInCode);
-                    }
-                    catch (Exception ConnectionNotFound)
-                    {
-                        Console.WriteLine(
-                                        "Errore nello stabilire connessione con il Database SQL Server \n" +
-                                                $"ECCEZIONE: {ConnectionNotFound.Message} \n"
-                                     );
-                    }
-                }
+                _con = new SqlConnection(connectionString);
             }
-            else    //Nel caso il file di configurazione non contenesse alcuna stringa di connessione
+            else
             {
-
-                try
-                {
-                    _con = new SqlConnection(connectionStringInCode);
-
-                }
-                catch (Exception ConnectionNotFound)
-                {
-                    Console.WriteLine(
-                                        "Errore nello stabilire connessione con il Database SQL Server \n" +
-                                                $"ECCEZIONE: {ConnectionNotFound.Message} \n"
-                                     );
-                }
+                Console.WriteLine("Connessione non avvenuta correttamente!");
+                _con = null;
             }
 
         }
