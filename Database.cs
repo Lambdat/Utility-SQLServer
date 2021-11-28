@@ -24,13 +24,19 @@ namespace Utility_SQLServer
 
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
-                _con = new SqlConnection(connectionString);
+                try 
+                {
+                    _con = new SqlConnection(connectionString);
+                }catch (Exception e)
+                {
+                    Console.WriteLine(
+                                        "Connessione non effettuata, reinserire correttamente la ConnectionString \n" +
+                                        $"Eccezione generata: {e.Message}" 
+                                     );
+                }
+
             }
-            else
-            {
-                Console.WriteLine("Connessione non avvenuta correttamente!");
-                _con = null;
-            }
+           
 
         }
 
