@@ -15,6 +15,7 @@ namespace Utility_SQLServer
     {
 
         private SqlConnection _con;
+        
 
         // All'inizializzazione dell'oggetto di tipo Database va passato al metodo costruttore la connection string
         // presa dal file di configurazione del progetto (es. da ASP.NET 6 in Program.cs)
@@ -22,7 +23,7 @@ namespace Utility_SQLServer
         // il parametro string name è opzionale, può essere cambiato a seconda delle connection strings presenti nel
         // file appsettings.json sempre di configurazione
 
-        public Database(IConfiguration config, string connectionStringInCode, string connectionStringNameInConfigFile = "Default")
+        public Database(string connectionStringInCode, IConfiguration config, string connectionStringNameInConfigFile = "Default")
         {
 
 
